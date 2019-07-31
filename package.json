@@ -1,0 +1,32 @@
+{
+  "name": "sakuraback",
+  "version": "1.0.0",
+  "description": "backend for sakura app",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test",
+    "start": "nodemon index.js",
+    "coverage": "nyc --reporter html --reporter text npm test"
+  },
+  "author": "Vovk Andrii",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-validator": "^6.1.1",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.3.0",
+    "nodemon": "^1.19.1",
+    "pg": "^7.11.0",
+    "sequelize": "^5.9.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.5",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "sinon": "^7.3.2"
+  }
+}
