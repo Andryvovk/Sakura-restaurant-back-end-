@@ -9,9 +9,9 @@ exports.getMenu = (req, res, next) => {
     .then(menu => {
       res.json(menu);
     })
-    .catch(err => res.json(err));
+    .catch(err => console.log(err))
 };
-exports.addDish = async (req, res, next) => {
+exports.addDish = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const error = new Error("Validation failed.");
@@ -20,7 +20,6 @@ exports.addDish = async (req, res, next) => {
     console.log(errors);
     throw error;
   }
-  try {
     const name = req.body.name;
     const description = req.body.description;
     const img = req.body.img;
@@ -31,14 +30,10 @@ exports.addDish = async (req, res, next) => {
           MenuId: req.params.MenuId
         });
         return Dish.save()
-
       .then(result => {
-        res.status(201).json({ message: "Dish created!"});
+        res.status(201).json({ message: 'Dish created!', userId: result._id });
+      })
+      .catch(err => {
+        next(err);
       });
-  } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    return err;
-  }
 };

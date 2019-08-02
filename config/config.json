@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "postgres",
-    "password": "Collapse_376",
+    "password": "collapse376",
     "database": "sakura",
     "host": "localhost",
     "dialect": "postgres",

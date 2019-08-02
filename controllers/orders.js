@@ -8,7 +8,7 @@ exports.getOrders = (req, res, next) => {
     })
     .catch(err => console.log("error " + err));
 };
-exports.addOrders = async (req, res, next) => {
+exports.addOrders = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const error = new Error("Validation failed.");
@@ -17,7 +17,6 @@ exports.addOrders = async (req, res, next) => {
     console.log(errors);
     throw error;
   }
-  try {
     const username = req.body.username;
     const dishName = req.body.dishName;
     const counter = req.body.counter;
@@ -29,18 +28,14 @@ exports.addOrders = async (req, res, next) => {
         });
         return Dish.save()
 
-      .then(result => {
-        res.status(201).json({ message: "Dish created!"});
-      });
-  } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    return err;
-  }
+        .then(result => {
+          res.status(201).json({ message: 'Order created!', userId: result._id });
+        })
+        .catch(err => {
+          next(err);
+        });
 };
 exports.submitOrders = async (req, res, next) => {
-  try{
     const id = req.params.id;
     Orders.destroy({
       where: {
@@ -50,12 +45,9 @@ exports.submitOrders = async (req, res, next) => {
     return Orders.save()
 
     .then(result => {
-      res.status(201).json({ message: "Order was deleted"});
+      res.status(201).json({ message: 'Order go to the kitchen!', userId: result._id });
+    })
+    .catch(err => {
+      next(err);
     });
-} catch (err) {
-  if (!err.statusCode) {
-    err.statusCode = 500;
-  }
-  return err;
-}
 };
